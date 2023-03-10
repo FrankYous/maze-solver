@@ -1,0 +1,1 @@
+The codes in this depository are for the boot.dev's Maze Solver guided project.
