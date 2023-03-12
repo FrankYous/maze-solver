@@ -32,11 +32,11 @@ class Point:
 
 
 class Line:
-    def __init__(self, x1, y1, x2, y2):
-        self.x1 = x1
-        self.x2 = x2
-        self.y1 = y1
-        self.y2 = y2
+    def __init__(self, point1, point2):
+        self.x1 = point1.x
+        self.x2 = point2.x
+        self.y1 = point1.y
+        self.y2 = point2.y
 
     def draw(self, canvas, fill_color):
         canvas.create_line(
@@ -58,23 +58,23 @@ class Cell:
         self._win = win
 
     def draw(self):
-        if self.has_left_wall == True:
-            linel = Line(self._x1, self._y1, self._x1, self._y2)
+        if self.has_left_wall:
+            linel = Line(Point(self._x1, self._y1), Point(self._x1, self._y2))
             self._win.draw_line(linel,"red")
-        if self.has_right_wall == True:
-            liner = Line(self._x2, self._y1, self._x2, self._y2)
+        if self.has_right_wall:
+            liner = Line(Point(self._x2, self._y1), Point(self._x2, self._y2))
             self._win.draw_line(liner,"blue")
-        if self.has_top_wall == True:
-            linet = Line(self._x1, self._y1, self._x2, self._y1)
+        if self.has_top_wall:
+            linet = Line(Point(self._x1, self._y1), Point(self._x2, self._y1))
             self._win.draw_line(linet, "green")
-        if self.has_bottom_wall == True:
-            lineb = Line(self._x1, self._y2, self._x2, self._y2)
+        if self.has_bottom_wall:
+            lineb = Line(Point(self._x1, self._y2), Point(self._x2, self._y2))
             self._win.draw_line(lineb, "black")
 
 def main():
     win = Window(800, 600)
     cell1 = Cell(100,100,400,400,win)
-    cell1.has_left_right = True
+    cell1.has_left_wall = False
     cell1.draw()
     win.wait_for_close()
 
