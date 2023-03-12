@@ -71,6 +71,17 @@ class Cell:
             lineb = Line(Point(self._x1, self._y2), Point(self._x2, self._y2))
             self._win.draw_line(lineb, "black")
 
+    def draw_move(self, to_cell, undo=False):
+        if undo == False:
+            color = "red"
+        else:
+            color = "gray"
+        line = Line(
+            Point((self._x1 + self._x2)/2,(self._y1+self._y2)/2), 
+            Point((to_cell._x1 + to_cell._x2)/2,(to_cell._y1+to_cell._y2)/2))
+        self._win.draw_line(line, color)
+
+
 def main():
     win = Window(800, 600)
     cell1 = Cell(100,100,400,400,win)
