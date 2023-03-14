@@ -82,6 +82,43 @@ class Cell:
         self._win.draw_line(line, color)
 
 
+class Maze:
+    def __init__(
+            self,
+            x1,
+            y1,
+            num_rows,
+            num_cols,
+            cell_size_x,
+            cell_size_y,
+            win):
+        self.x1 = x1
+        self.y1 = y1
+        self.num_rows = num_rows
+        self.num_cols = num_cols
+        self.cell_size_x = cell_size_x
+        self.cell_size_y = cell_size_y
+        self._win = win
+        self._create_cells()
+
+    def _create_cells():
+        self._cells = []
+        for i in range(0,num_cols):
+            row = []
+            for j in range(0,num_rows):
+                row.append(Cell(x1,y1,x1+cell_size_x,y1+cell_size_y))
+            self._cells.append(row)
+        for i in range(0,bum_cols):
+            for j in range(0,num_rows):
+                self._draw_cell(i,j)
+
+    def _draw_cell(self,i,j)
+        x1 = i * cell_size_x
+        x2 = (i+1) * cell_size_x
+        y1 = j * cell_size_y
+        y2 = (j+1) * cell_size_y
+
+
 def main():
     win = Window(800, 600)
     cell1 = Cell(100,100,400,400,win)
