@@ -1,4 +1,5 @@
 from tkinter import Tk, BOTH, Canvas
+import time
 
 class Window:
     def __init__(self, width, height):
@@ -60,13 +61,13 @@ class Cell:
     def draw(self):
         if self.has_left_wall:
             linel = Line(Point(self._x1, self._y1), Point(self._x1, self._y2))
-            self._win.draw_line(linel,"red")
+            self._win.draw_line(linel, "black")
         if self.has_right_wall:
             liner = Line(Point(self._x2, self._y1), Point(self._x2, self._y2))
-            self._win.draw_line(liner,"blue")
+            self._win.draw_line(liner, "black")
         if self.has_top_wall:
             linet = Line(Point(self._x1, self._y1), Point(self._x2, self._y1))
-            self._win.draw_line(linet, "green")
+            self._win.draw_line(linet, "black")
         if self.has_bottom_wall:
             lineb = Line(Point(self._x1, self._y2), Point(self._x2, self._y2))
             self._win.draw_line(lineb, "black")
@@ -101,29 +102,34 @@ class Maze:
         self._win = win
         self._create_cells()
 
-    def _create_cells():
+    def _create_cells(self):
         self._cells = []
-        for i in range(0,num_cols):
+        for i in range(0,self.num_cols):
             row = []
-            for j in range(0,num_rows):
-                row.append(Cell(x1,y1,x1+cell_size_x,y1+cell_size_y))
+            for j in range(0,self.num_rows):
+                row.append(Cell(self.x1,self.y1,self.x1+self.cell_size_x,self.y1+self.cell_size_y,self._win))
             self._cells.append(row)
-        for i in range(0,bum_cols):
-            for j in range(0,num_rows):
+        for i in range(0,self.num_cols):
+            for j in range(0,self.num_rows):
                 self._draw_cell(i,j)
 
-    def _draw_cell(self,i,j)
-        x1 = i * cell_size_x
-        x2 = (i+1) * cell_size_x
-        y1 = j * cell_size_y
-        y2 = (j+1) * cell_size_y
+    def _draw_cell(self,i,j):
+        self.xs = self.x1 + i * self.cell_size_x
+        self.xe = self.xs + self.cell_size_x
+        self.ys = self.y1 + j * self.cell_size_y
+        self.ye = self.ys + self.cell_size_y
+        cell1 = Cell(self.xs,self.ys,self.xe, self.ye,self._win)
+        cell1.draw()
+        self._animate()
+
+    def _animate(self):
+        self._win.redraw()
+        time.sleep (0.05)
 
 
 def main():
     win = Window(800, 600)
-    cell1 = Cell(100,100,400,400,win)
-    cell1.has_left_wall = False
-    cell1.draw()
+    maze1 = Maze(30,20, 5,8,70,50,win)
     win.wait_for_close()
 
 
