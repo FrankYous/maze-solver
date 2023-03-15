@@ -1,4 +1,3 @@
-from graphics import Window
 from cell import Cell
 import time
 
@@ -45,12 +44,3 @@ class Maze:
     def _animate(self):
         self._win.redraw()
         time.sleep (0.05)
-
-
-def main():
-    win = Window(800, 600)
-    maze1 = Maze(30,20, 5,8,70,50,win)
-    win.wait_for_close()
-
-
-main()

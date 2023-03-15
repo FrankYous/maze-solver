@@ -1,5 +1,4 @@
 from graphics import Point, Line
-import time
 
 
 class Cell:
