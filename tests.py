@@ -16,32 +16,21 @@ class Tests(unittest.TestCase):
             num_rows,
         )
 
-    def test_maze_create_cells2(self):
+    def test_maze_entrance_and_exit(self):
         num_cols = 18
-        num_rows = 21
+        num_rows = 11
         m1 = Maze(0, 0, num_rows, num_cols, 10, 10)
-        self.assertEqual(
-            len(m1._cells),
-            num_cols,
-        )
-        self.assertEqual(
-            len(m1._cells[0]),
-            num_rows,
-        )
+        self.assertFalse(m1._cells[0][0].has_top_wall)
+        self.assertFalse(m1._cells[num_cols-1][num_rows-1].has_bottom_wall)
+            
 
-    def test_maze_create_cells3(self):
-        num_cols = 4
-        num_rows = 9
+    def test_maze_reset_visited(self):
+        num_cols = 8
+        num_rows = 15
         m1 = Maze(0, 0, num_rows, num_cols, 10, 10)
-        self.assertEqual(
-            len(m1._cells),
-            num_cols,
-        )
-        self.assertEqual(
-            len(m1._cells[0]),
-            num_rows,
-        )        
-
+        for col in m1._cells:
+            for cell in col:
+                self.assertFalse(cell.visited)
 
 if __name__ == "__main__":
     unittest.main()

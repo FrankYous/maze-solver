@@ -27,6 +27,7 @@ class Maze:
         self._create_cells()
         self._break_entrance_and_exit()
         self._break_walls_r(0,0)
+        self._reset_cells_visited()
 
     def _create_cells(self):
         self._cells = []
@@ -62,36 +63,39 @@ class Maze:
             to_visit.append([i,j-1])
         if j < self.num_rows-1:
             to_visit.append([i,j+1])
-        if to_visit == []:
-            return
-        else:
-            while to_visit != []:
-                dir = random.randrange(len(to_visit))
-                coord = to_visit.pop(dir)
-                cx = coord [0]
-                cy = coord [1]
-            
-                if cx == i+1 and self._cells[i+1][j].visited == False:
-                    self._cells[i][j].has_right_wall = False
-                    self._cells[i+1][j].has_left_wall = False
-                    self._break_walls_r(i+1,j)
 
-                if cy == j+1 and self._cells[i][j+1].visited == False:
-                    self._cells[i][j].has_bottom_wall = False
-                    self._cells[i][j+1].has_top_wall = False
-                    self._break_walls_r(i,j+1)                  
+        while to_visit != []:
+            dir = random.randrange(len(to_visit))
+            coord = to_visit.pop(dir)
+            cx = coord [0]
+            cy = coord [1]
+        
+            if cx == i+1 and self._cells[i+1][j].visited == False:
+                self._cells[i][j].has_right_wall = False
+                self._cells[i+1][j].has_left_wall = False
+                self._break_walls_r(i+1,j)
 
-                if cx == i-1 and self._cells[i-1][j].visited == False:
-                    self._cells[i-1][j].has_right_wall = False
-                    self._cells[i][j].has_left_wall = False
-                    self._break_walls_r(i-1,j)
+            if cy == j+1 and self._cells[i][j+1].visited == False:
+                self._cells[i][j].has_bottom_wall = False
+                self._cells[i][j+1].has_top_wall = False
+                self._break_walls_r(i,j+1)                  
 
-                if cy == j-1 and self._cells[i][j-1].visited == False:
-                    self._cells[i][j-1].has_bottom_wall = False
-                    self._cells[i][j].has_top_wall = False
-                    self._break_walls_r(i,j-1)
+            if cx == i-1 and self._cells[i-1][j].visited == False:
+                self._cells[i-1][j].has_right_wall = False
+                self._cells[i][j].has_left_wall = False
+                self._break_walls_r(i-1,j)
+
+            if cy == j-1 and self._cells[i][j-1].visited == False:
+                self._cells[i][j-1].has_bottom_wall = False
+                self._cells[i][j].has_top_wall = False
+                self._break_walls_r(i,j-1)
                  
-                self._draw_cell(i,j)
+            self._draw_cell(i,j)
+
+    def _reset_cells_visited(self):
+        for col in self._cells:
+            for cell in col:
+                cell.visited = False
 
     def _draw_cell(self,i,j):
         self._cells[i][j].draw()
