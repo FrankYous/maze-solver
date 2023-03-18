@@ -43,6 +43,8 @@ class Cell:
             self._win.draw_line(lineb, "white")
 
     def draw_move(self, to_cell, undo=False):
+        if self._win is None:
+            return
         if undo:
             color = "gray"
         else:
